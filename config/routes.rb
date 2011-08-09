@@ -1,41 +1,28 @@
 TinamiViewer::Application.routes.draw do
-  get "error/index"
+  root :to => "index#index", as: :index
 
-  get "user/bookmarks"
+  controller :index do
+    get  "auth",    as: :login
+    post "auth",    as: :auth
+    get  "logout",  as: :logout
+    get  "search",  as: :search
+  end
 
-  get "user/bookmark_contents"
+  get "ranking/:category" => "index#ranking", as: :ranking
 
-  get "user/watchkeyword_contents"
+  get    "content/:cont_id"                      => "index#content",       as: :content
+  get    "content/:cont_id/comments"             => "user#comments",       as: :comments
+  post   "content/:cont_id/comments"             => "user#add_comment",    as: :add_comment
+  delete "content/:cont_id/comments/:comment_id" => "user#remove_comment", as: :remove_comment
 
-  get "user/friend_recommends"
-
-  get "user/collections"
-
-  get "user/bookmarks"
-
-  get "user/support"
-
-  get "user/add_collection"
-
-  get "user/add_bookmark"
-
-  get "user/comments"
-
-  get "user/add_comment"
-
-  get "user/remove_comment"
-
-  get "index/index"
-
-  get "index/ranking"
-
-  get "index/search"
-
-  get "index/content"
-
-  get "index/auth"
-
-  get "index/logout"
+  get  "watchkeyword/contents"     => "user#watchkeyword_contents", as: :watchkeyword_contents
+  get  "friend/recommend/contents" => "user#friend_recommends",     as: :friend_recommends
+  get  "collections"               => "user#collections",           as: :collections
+  post "collections"               => "user#add_collection",        as: :add_collection
+  get  "bookmarks/contents"        => "user#bookmark_contents",     as: :bookmark_contents
+  get  "bookmarks"                 => "user#bookmarks",             as: :bookmarks
+  post "bookmarks"                 => "user#add_bookmark",          as: :add_bookmark
+  post "support"                   => "user#support",               as: :support
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

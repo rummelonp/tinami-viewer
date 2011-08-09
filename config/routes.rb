@@ -1,4 +1,28 @@
 TinamiViewer::Application.routes.draw do
+  get "user/bookmarks"
+
+  get "user/bookmark_contents"
+
+  get "user/watchkeyword_contents"
+
+  get "user/friend_recommends"
+
+  get "user/collections"
+
+  get "user/bookmarks"
+
+  get "user/support"
+
+  get "user/add_collection"
+
+  get "user/add_bookmark"
+
+  get "user/comments"
+
+  get "user/add_comment"
+
+  get "user/remove_comment"
+
   get "index/index"
 
   get "index/ranking"

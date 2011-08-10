@@ -1,2 +1,34 @@
-<h1>Index#index</h1>
-<p>Find me in app/views/index/index.html.erb</p>
+<ul data-role="listview">
+  <li><%= link_to "お気に入りクリエイターの新着作品", :bookmark_contents %></li>
+  <li><%= link_to "ウォッチキーワードの新着作品", :watchkeyword_contents %></li>
+  <li><%= link_to "友達が支援した作品", :friend_recommends %></li>
+  <li><%= link_to "コレクション", :collections %></li>
+  <li><%= link_to "お気に入りクリエイター", :bookmarks %></li>
+  <li data-role="list-divider">ランキング</li>
+  <% rankings.each do |category, name| %>
+  <li><%= link_to name, action: :ranking, category: category %></li>
+  <% end %>
+  <li data-role="list-divider">検索</li>
+  <li>
+    <%= form_tag(:search, method: :get) do %>
+      <div data-role="fieldcontain">
+        <%= label_tag :text, "キーワード" %>
+        <%= text_field_tag :text %>
+      </div>
+      <div data-role="fieldcontain">
+        <%= label_tag :sort, "並び順" %>
+        <%= select_tag :sort, options_for_select(sort_options.invert), id: :sort %>
+      </div>
+      <div data-role="fieldcontain">
+        <fieldset data-role="controlgroup">
+          <legend>検索モード</legend>
+          <% categories.each do |category, name| %>
+          <%= check_box_tag "cont_type[]", category, false, id: "cont_type_#{category}" %>
+          <%= label_tag "cont_type_#{category}", name %>
+          <% end %>
+        </fieldset>
+      </div>
+      <%= submit_tag "検索", "data-theme" => "b", "data-icon" => "search" %>
+      <% end %>
+  </li>
+</ul>

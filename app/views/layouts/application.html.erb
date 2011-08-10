@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>TinamiViewer</title>
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+  <head>
+    <title>ちなみびゅあ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div data-role="page" id="<%= params[:action] %>">
+      <div data-role="header" data-theme="b">
+        <%= link_to "ホーム", :index, class: "ui-btn-left" %>
+        <h1>ちなみびゅあ</h1>
+      </div>
+      <div data-role="content">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
 </html>

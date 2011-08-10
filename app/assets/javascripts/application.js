@@ -5,6 +5,7 @@
 // the compiled file.
 //
 //= require jquery
+//= require tinami
 //= require jquery.mobile
 //= require jquery_ujs
 //= require_tree .

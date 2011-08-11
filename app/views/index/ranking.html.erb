@@ -1,2 +1,2 @@
-<h1>Index#ranking</h1>
-<p>Find me in app/views/index/ranking.html.erb</p>
+<% content_for :subtitle, rankings[params[:category].to_i] %>
+<%= render :partial => 'layouts/contents' %>

@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
+  module UrlHelper
+    def content_url(cont_id)
+      url_for(controller: :index, action: :content, cont_id: cont_id)
+    end
+  end
+
   module Constants
     def rankings
       {
@@ -33,5 +39,6 @@ module ApplicationHelper
     end
   end
 
+  include UrlHelper
   include Constants
 end

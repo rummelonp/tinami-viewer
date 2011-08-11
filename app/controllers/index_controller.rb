@@ -3,6 +3,8 @@ class IndexController < ApplicationController
   end
 
   def ranking
+    data = client.ranking(params[:category])
+    @contents = data.contents
   end
 
   def search

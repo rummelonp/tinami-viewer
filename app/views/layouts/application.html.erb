@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <% if content_for? :subtitle %>
+    <title><%= yield :subtitle %> - ちなみびゅあ</title>
+    <% else %>
     <title>ちなみびゅあ</title>
+    <% end %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "application" %>
@@ -11,7 +15,11 @@
     <div data-role="page" id="<%= params[:action] %>">
       <div data-role="header" data-theme="b">
         <%= link_to "ホーム", :index, class: "ui-btn-left" %>
+        <% if content_for? :subtitle %>
+        <h1><%= yield :subtitle %></h1>
+        <% else %>
         <h1>ちなみびゅあ</h1>
+        <% end %>
       </div>
       <div data-role="content">
         <%= yield %>

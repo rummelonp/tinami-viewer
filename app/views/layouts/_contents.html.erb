@@ -1,0 +1,11 @@
+<div id="contents" class="hfeed">
+  <% if @contents.content %>
+  <% @contents.content.each do |c| %>
+  <div id="<%= c.id %>" class="content hentry <%= c.type %>">
+    <div class="thumbnail entry-content">
+      <%= link_to image_tag(c.thumbnails.thumbnail_150x150.url), content_url(c.id) %>
+    </div>
+  </div>
+  <% end %>
+  <% end %>
+</div>

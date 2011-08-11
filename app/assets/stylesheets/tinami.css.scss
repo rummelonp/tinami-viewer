@@ -1,4 +1,9 @@
 
+.notice {
+  font-weight: bold;
+  color: red;
+}
+
 @mixin max-size($size) {
   max-width: $size;
   max-height: $size;

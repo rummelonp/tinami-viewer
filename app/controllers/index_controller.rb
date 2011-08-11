@@ -23,9 +23,23 @@ class IndexController < ApplicationController
   end
 
   def auth
+    return unless request.post?
+    begin
+      auth = TINAMI.auth params[:email], params[:password]
+      session[:auth_key] = auth.auth_key
+      redirect_to :index
+    rescue TINAMI::Error => e
+      flash[:notice] = e.message
+    end
   end
 
   def logout
+    begin
+      TINAMI.logout auth_key: session.delete(:auth_key)
+    rescue TINAMI::Error => e
+      logger.info e
+    end
+    redirect_to :index
   end
 
 end

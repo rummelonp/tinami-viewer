@@ -1,2 +1,15 @@
-<h1>Index#auth</h1>
-<p>Find me in app/views/index/auth.html.erb</p>
+<% content_for :subtitle, 'ログイン' %>
+<% if flash[:notice] %>
+<div class="notice">
+  <%= flash[:notice] %>
+</div>
+<% end %>
+<%= form_tag :auth, method: :post do %>
+<div data-role="fieldcontain">
+  <%= label_tag :email, "メールアドレス" %>
+  <%= email_field_tag :email, params[:email], id: :email %>
+  <%= label_tag :password, "パスワード" %>
+  <%= password_field_tag :password, nil, id: :password %>
+</div>
+<%= submit_tag "ログイン", "data-theme" => "b" %>
+<% end %>

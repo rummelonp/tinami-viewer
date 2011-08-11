@@ -23,6 +23,12 @@ module ApplicationHelper
     end
   end
 
+  module Common
+    def authenticated?
+      session[:auth_key].present?
+    end
+  end
+
   module Constants
     def rankings
       {
@@ -58,5 +64,6 @@ module ApplicationHelper
 
   include TagHelper
   include UrlHelper
+  include Common
   include Constants
 end

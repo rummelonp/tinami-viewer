@@ -20,6 +20,13 @@
         <% else %>
         <h1>ちなみびゅあ</h1>
         <% end %>
+        <% unless params[:action] == "auth" %>
+        <% if authenticated? %>
+        <%= link_to "ログアウト", :logout, class: "ui-btn-right" %>
+        <% else %>
+        <%= link_to "ログイン", :login, class: "ui-btn-right" %>
+        <% end %>
+        <% end %>
       </div>
       <div data-role="content">
         <%= yield %>

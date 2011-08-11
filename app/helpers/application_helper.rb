@@ -1,5 +1,22 @@
 # -*- coding: utf-8 -*-
 module ApplicationHelper
+  module TagHelper
+    def next_button_if_exists(data)
+      if data.page && data.pages &&
+          data.page.to_i < data.pages.to_i
+        ('<div class="next">' + next_button(data) + '</div>').html_safe
+      end
+    end
+
+    def next_button(data)
+      button '次へ', params.merge(page: data.page.to_i + 1)
+    end
+
+    def button(text, url, options = {})
+      link_to text, url, {'data-role' => 'button', 'data-theme' => 'c'}.merge(options)
+    end
+  end
+
   module UrlHelper
     def content_url(cont_id)
       url_for(controller: :index, action: :content, cont_id: cont_id)
@@ -39,6 +56,7 @@ module ApplicationHelper
     end
   end
 
+  include TagHelper
   include UrlHelper
   include Constants
 end

@@ -4,4 +4,8 @@ class ApplicationController < ActionController::Base
   def client
     @client ||= TINAMI.client
   end
+
+  def page_params
+    {'page' => 1, 'perpage' => 40}.merge(params)
+  end
 end

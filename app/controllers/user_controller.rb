@@ -48,6 +48,10 @@ class UserController < ApplicationController
   end
 
   def comments
+    handle_remote do
+      data = client.comments(params[:cont_id])
+      render json: data.comments.to_json
+    end
   end
 
   def add_comment

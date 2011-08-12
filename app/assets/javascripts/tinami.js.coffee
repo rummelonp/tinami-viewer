@@ -9,8 +9,10 @@ class TINAMI
     $(document).ready () ->
       remote_actions = $('a[data-remote]')
       user_actions = $('.support a, .collection-add a, .bookmark-add a')
+      comments_actions = $('.comments-load a')
       remote_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.defaultHandler
       user_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.actionHandler
+      comments_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.commentsHandler
 
   mobileinit: () ->
     $m = $.mobile
@@ -44,5 +46,17 @@ class TINAMI
   actionHandler:
     success: (event, data) ->
       $(this).remove()
+
+  commentsHandler:
+    success: (event, data) ->
+      $(this).remove()
+      return unless $.isPlainObject(data)
+      comments = $('.comments')
+      data = data.comment
+      if $.isArray(data)
+        comments.append('<div class="comment">' + d + '</div>') for d in data
+      else
+        comments.append('<div class="comment">' + data + '</div>')
+
 
 new TINAMI(jQuery)

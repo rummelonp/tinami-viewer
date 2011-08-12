@@ -1,9 +1,11 @@
 <ul data-role="listview">
+  <% if authenticated? %>
   <li><%= link_to "お気に入りクリエイターの新着作品", :bookmark_contents %></li>
   <li><%= link_to "ウォッチキーワードの新着作品", :watchkeyword_contents %></li>
   <li><%= link_to "友達が支援した作品", :friend_recommends %></li>
   <li><%= link_to "コレクション", :collections %></li>
   <li><%= link_to "お気に入りクリエイター", :bookmarks %></li>
+  <% end %>
   <li data-role="list-divider">ランキング</li>
   <% rankings.each do |category, name| %>
   <li><%= link_to name, action: :ranking, category: category %></li>

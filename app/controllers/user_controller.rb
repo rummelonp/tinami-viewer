@@ -1,14 +1,22 @@
 class UserController < ApplicationController
   def bookmark_contents
+    data = client.bookmark_contents(page_params)
+    @contents = data.contents
   end
 
   def watchkeyword_contents
+    data = client.watchkeyword_contents(page_params)
+    @contents = data.contents
   end
 
   def friend_recommends
+    data = client.friend_recommends(page_params)
+    @contents = data.contents
   end
 
   def collections
+    data = client.collections(page_params)
+    @contents = data.contents
   end
 
   def bookmarks

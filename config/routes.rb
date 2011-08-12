@@ -1,4 +1,6 @@
 TinamiViewer::Application.routes.draw do
+  get "error/index"
+
   get "user/bookmarks"
 
   get "user/bookmark_contents"

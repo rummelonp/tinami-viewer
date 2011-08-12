@@ -16,6 +16,10 @@ module ApplicationHelper
       link_to text, url, {'data-role' => 'button', 'data-theme' => 'c'}.merge(options)
     end
 
+    def link_to_view(text, cont_id, options = {})
+      link_to_external text, view_url(cont_id), options
+    end
+
     def link_to_profile(text, prof_id, options = {})
       link_to_external text, profile_url(prof_id), options
     end
@@ -28,6 +32,10 @@ module ApplicationHelper
   module UrlHelper
     def content_url(cont_id)
       url_for(controller: :index, action: :content, cont_id: cont_id)
+    end
+
+    def view_url(cont_id)
+      "http://www.tinami.com/view/#{cont_id}"
     end
 
     def profile_url(prof_id)

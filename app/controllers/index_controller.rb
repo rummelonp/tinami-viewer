@@ -20,6 +20,9 @@ class IndexController < ApplicationController
   end
 
   def content
+    @cont_id = params[:cont_id]
+    data = client.content(@cont_id)
+    @content = data.content
   end
 
   def auth

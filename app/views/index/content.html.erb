@@ -1,2 +1,71 @@
-<h1>Index#content</h1>
-<p>Find me in app/views/index/content.html.erb</p>
+<% @content.tap do |c| %>
+<% content_for :subtitle, c.title %>
+<% if flash[:notice] %>
+<div class="notice">
+  <%= flash[:notice] %>
+</div>
+<% end %>
+<div id="<%= c.id %>" class="content hentry <%= c.type %>">
+  <div class="title entry-title">
+    <h3><%= c.title %></h3>
+  </div>
+  <div class="description entry-summary">
+    <%= c.description %>
+  </div>
+  <div class="type">
+    <%= c.type %>
+  </div>
+  <div class="tags">
+    タグ: <%= [(c.tags.tag rescue [])].flatten.map {|t|
+                link_to t, url_for(action: :search, text: t)
+              }.join("&nbsp;").html_safe %>
+  </div>
+  <% if c.type == 'novel'%>
+  <div class="pages entry-content">
+    <%= c.pages.page.join.html_safe %>
+  </div>
+  <% elsif c.type == 'manga' %>
+  <div class="images entry-content">
+    <%= [c.images.image].flatten.map {|i|
+          link_to_view image_tag(i.url, alt: c.description), @cont_id
+        }.join("<br />").html_safe %>
+  </div>
+  <% else %>
+  <div class="image entry-content">
+    <%= link_to_view image_tag(c.image.url, alt: c.description), @cont_id %>
+  </div>
+  <% end %>
+  <div class="total_view">
+    トータルビュー: <span class="count"><%= c.total_view %></span>
+  </div>
+  <div class="user_view">
+    ユーザーレビュー: <span class="count"><%= c.user_view %></span>
+  </div>
+  <div class="valuation">
+    支援: <span class="count"><%= c.valuation %></span>
+  </div>
+  <% if authenticated? && c.issupport.to_i != 1 %>
+  <div class="support">
+    <%= button '支援する', url_for(controller: :user, action: :support, cont_id: @cont_id) %>
+  </div>
+  <% end %>
+  <% if authenticated? && c.iscollection.to_i != 1 %>
+  <div class="collection-add">
+    <%= button 'コレクションに追加する', url_for(controller: :user, action: :add_collection, cont_id: @cont_id) %>
+  </div>
+  <% end %>
+  <div id="<%= c.creator.id %>" class="creator">
+    <div class="name author">
+      <h3><%= link_to_profile c.creator.name, c.creator.id %></h3>
+    </div>
+    <div class="thumbnail">
+      <%= link_to_profile image_tag(c.creator.thumbnail, alt: c.creator.name), c.creator.id %>
+    </div>
+    <% if authenticated? && c.creator.isbookmark.to_i != 1 %>
+    <div class="bookmark-add">
+      <%= button 'ブックマークに追加する', url_for(controller: :user, action: :add_bookmark, prof_id: c.creator.id, cont_id: @cont_id) %>
+    </div>
+    <% end %>
+  </div>
+</dov>
+<% end %>

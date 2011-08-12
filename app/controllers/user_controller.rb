@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  before_filter :authenticate, except: [:comments]
+
   def bookmark_contents
     data = client.bookmark_contents(page_params)
     @contents = data.contents
@@ -55,6 +57,10 @@ class UserController < ApplicationController
   end
 
   private
+  def authenticate
+    redirect_to :login unless authenticated?
+  end
+
   def handle_remote
     begin
       yield

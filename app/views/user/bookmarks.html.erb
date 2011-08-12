@@ -1,2 +1,15 @@
-<h1>User#bookmarks</h1>
-<p>Find me in app/views/user/bookmarks.html.erb</p>
+<div id="creators" class="hfeed">
+  <% if @creators.creator %>
+  <% @creators.creator.each do |c| %>
+  <div id="<%= c.id %>" class="creator hentry">
+    <div class="thumbnail entry-content">
+      <%= link_to_profile image_tag(c.thumbnail, id: c.id, alt: c.name), c.id %>
+    </div>
+    <div class="name author">
+      <%= link_to_profile c.name, c.id %>
+    </div>
+  </div>
+  <% end %>
+  <% end %>
+</div>
+<%= next_button_if_exists(@creators) %>

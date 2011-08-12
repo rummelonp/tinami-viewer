@@ -15,11 +15,23 @@ module ApplicationHelper
     def button(text, url, options = {})
       link_to text, url, {'data-role' => 'button', 'data-theme' => 'c'}.merge(options)
     end
+
+    def link_to_profile(text, prof_id, options = {})
+      link_to_external text, profile_url(prof_id), options
+    end
+
+    def link_to_external(text, url, options = {})
+      link_to text, url, {rel: 'external nofollow', target: '_blank'}.merge(options)
+    end
   end
 
   module UrlHelper
     def content_url(cont_id)
       url_for(controller: :index, action: :content, cont_id: cont_id)
+    end
+
+    def profile_url(prof_id)
+      "http://www.tinami.com/creator/profile/#{prof_id}"
     end
   end
 

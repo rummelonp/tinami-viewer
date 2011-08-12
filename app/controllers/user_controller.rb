@@ -20,6 +20,8 @@ class UserController < ApplicationController
   end
 
   def bookmarks
+    data = client.bookmarks
+    @creators = data.creators
   end
 
   def support

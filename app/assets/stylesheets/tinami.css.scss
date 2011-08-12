@@ -19,12 +19,26 @@
     height: 130px;
     overflow: hidden;
 
-    .thumbnail img {
-      @include max-size(150px);
+    &.content {
+      .thumbnail img {
+        @include max-size(150px);
+      }
+
+      &.novel .thumbnail img {
+        @include max-size(130px)
+      }
     }
 
-    &.novel .thumbnail img {
-      @include max-size(130px)
+    &.creator {
+      .thumbnail {
+        margin: 10px auto;
+        width: 64px;
+        height: 64px;
+      }
+
+      .author {
+        text-align: center;
+      }
     }
   }
 

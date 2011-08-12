@@ -46,12 +46,12 @@
   </div>
   <% if authenticated? && c.issupport.to_i != 1 %>
   <div class="support">
-    <%= button '支援する', url_for(controller: :user, action: :support, cont_id: @cont_id) %>
+    <%= button '支援する', url_for(controller: :user, action: :support, cont_id: @cont_id), method: :post, remote: true %>
   </div>
   <% end %>
   <% if authenticated? && c.iscollection.to_i != 1 %>
   <div class="collection-add">
-    <%= button 'コレクションに追加する', url_for(controller: :user, action: :add_collection, cont_id: @cont_id) %>
+    <%= button 'コレクションに追加する', url_for(controller: :user, action: :add_collection, cont_id: @cont_id), method: :post, remote: true %>
   </div>
   <% end %>
   <div id="<%= c.creator.id %>" class="creator">
@@ -63,7 +63,7 @@
     </div>
     <% if authenticated? && c.creator.isbookmark.to_i != 1 %>
     <div class="bookmark-add">
-      <%= button 'ブックマークに追加する', url_for(controller: :user, action: :add_bookmark, prof_id: c.creator.id, cont_id: @cont_id) %>
+      <%= button 'ブックマークに追加する', url_for(controller: :user, action: :add_bookmark, prof_id: c.creator.id, cont_id: @cont_id), method: :post, remote: true %>
     </div>
     <% end %>
   </div>

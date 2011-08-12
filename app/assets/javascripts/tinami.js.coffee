@@ -6,6 +6,11 @@ class TINAMI
       $('.hfeed .content .thumbnail img').
         each(tinami.setImagePosition).
         bind('load', tinami.setImagePosition))
+    $(document).ready () ->
+      remote_actions = $('a[data-remote]')
+      user_actions = $('.support a, .collection-add a, .bookmark-add a')
+      remote_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.defaultHandler
+      user_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.actionHandler
 
   mobileinit: () ->
     $m = $.mobile
@@ -24,5 +29,20 @@ class TINAMI
       top: ((130 - height) / 2) + 'px',
       left: ((130 - width) / 2) + 'px'
     }
+
+  defaultHandler:
+    beforeSend: (event) ->
+      $.mobile.pageLoading()
+    success: (event, data) ->
+      $.mobile.pageLoading(true)
+    complete: (event, data) ->
+      $.mobile.pageLoading(true)
+    error: (event, data) ->
+      $.mobile.pageLoading(true)
+      alert(data.responseText)
+
+  actionHandler:
+    success: (event, data) ->
+      $(this).remove()
 
 new TINAMI(jQuery)

@@ -25,12 +25,24 @@ class UserController < ApplicationController
   end
 
   def support
+    handle_remote do
+      client.support(params[:cont_id])
+      render text: nil
+    end
   end
 
   def add_collection
+    handle_remote do
+      client.add_collection(params[:cont_id])
+      render text: nil
+    end
   end
 
   def add_bookmark
+    handle_remote do
+      client.add_bookmark(params[:prof_id])
+      render text: nil
+    end
   end
 
   def comments
@@ -40,6 +52,16 @@ class UserController < ApplicationController
   end
 
   def remove_comment
+  end
+
+  private
+  def handle_remote
+    begin
+      yield
+    rescue TINAMI::Error => e
+      logger.info e
+      render text: e.message, status: 400
+    end
   end
 
 end

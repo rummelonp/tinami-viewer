@@ -17,4 +17,10 @@ class ApplicationController < ActionController::Base
   def page_params
     {'page' => 1, 'perpage' => 40}.merge(params)
   end
+
+  rescue_from TINAMI::Error do |e|
+    logger.info e
+    @notice = e.message
+    render template: 'error/index', status: 400
+  end
 end

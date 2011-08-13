@@ -45,18 +45,23 @@ class TINAMI
 
   actionHandler:
     success: (event, data) ->
-      $(this).remove()
+      self = $(this)
+      self.fadeOut 'fast', () ->
+        self.remove()
 
   commentsHandler:
     success: (event, data) ->
-      $(this).remove()
-      return unless $.isPlainObject(data)
-      comments = $('.comments')
-      data = data.comment
-      if $.isArray(data)
-        comments.append('<div class="comment">' + d + '</div>') for d in data
-      else
-        comments.append('<div class="comment">' + data + '</div>')
+      self = $(this)
+      self.fadeOut 'fast', () ->
+        self.remove()
+        return unless $.isPlainObject(data)
+        comments = $('.comments').hide()
+        data = data.comment
+        if $.isArray(data)
+          comments.append('<div class="comment">' + d + '</div>') for d in data
+        else
+          comments.append('<div class="comment">' + data + '</div>')
+        comments.fadeIn 'fast'
 
 
 new TINAMI(jQuery)

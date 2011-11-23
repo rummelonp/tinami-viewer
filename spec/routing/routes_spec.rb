@@ -68,8 +68,8 @@ describe :routes do
   end
 
   describe 'POST "collections"' do
-    subject { {post: '/collections'} }
-    it { should route_to(controller: 'user', action: 'add_collection') }
+    subject { {post: '/collections/1'} }
+    it { should route_to(controller: 'user', action: 'add_collection', cont_id: '1') }
   end
 
   describe 'GET "bookmarks/contents"' do
@@ -83,13 +83,13 @@ describe :routes do
   end
 
   describe 'POST "bookmark"' do
-    subject { {post: '/bookmarks'} }
-    it { should route_to(controller: 'user', action: 'add_bookmark') }
+    subject { {post: '/bookmarks/1'} }
+    it { should route_to(controller: 'user', action: 'add_bookmark', prof_id: '1') }
   end
 
   describe 'POST "support"' do
-    subject { {post: '/support'} }
-    it { should route_to(controller: 'user', action: 'support') }
+    subject { {post: '/support/1'} }
+    it { should route_to(controller: 'user', action: 'support', cont_id: '1') }
   end
 
 end

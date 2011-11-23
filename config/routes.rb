@@ -15,14 +15,14 @@ TinamiViewer::Application.routes.draw do
   post   "content/:cont_id/comments"             => "user#add_comment",    as: :add_comment
   delete "content/:cont_id/comments/:comment_id" => "user#remove_comment", as: :remove_comment
 
-  get  "watchkeyword/contents"     => "user#watchkeyword_contents", as: :watchkeyword_contents
-  get  "friend/recommend/contents" => "user#friend_recommends",     as: :friend_recommends
-  get  "collections"               => "user#collections",           as: :collections
-  post "collections"               => "user#add_collection",        as: :add_collection
-  get  "bookmarks/contents"        => "user#bookmark_contents",     as: :bookmark_contents
-  get  "bookmarks"                 => "user#bookmarks",             as: :bookmarks
-  post "bookmarks"                 => "user#add_bookmark",          as: :add_bookmark
-  post "support"                   => "user#support",               as: :support
+  get  "watchkeyword/contents"                 => "user#watchkeyword_contents", as: :watchkeyword_contents
+  get  "friend/recommend/contents"             => "user#friend_recommends",     as: :friend_recommends
+  get  "collections"                           => "user#collections",           as: :collections
+  post "collections/:cont_id"                  => "user#add_collection",        as: :add_collection
+  get  "bookmarks/contents"                    => "user#bookmark_contents",     as: :bookmark_contents
+  get  "bookmarks"                             => "user#bookmarks",             as: :bookmarks
+  post "bookmarks/:prof_id(/content/:cont_id)" => "user#add_bookmark",          as: :add_bookmark
+  post "support/:cont_id"                      => "user#support",               as: :support
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

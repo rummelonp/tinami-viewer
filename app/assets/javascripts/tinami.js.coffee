@@ -1,23 +1,24 @@
 class TINAMI
   constructor: () ->
     tinami = this
-    $(document).bind('mobileinit', tinami.mobileinit)
-    $(document).bind('pageshow', () ->
+    d = $(document)
+    d.bind('mobileinit', tinami.mobileinit)
+    d.bind('pageshow', () ->
       $('.hfeed .content .thumbnail img').
         each(tinami.setImagePosition).
         bind('load', tinami.setImagePosition))
-    $(document).ready () ->
-      remote_actions = $('a[data-remote]')
-      user_actions = $('.support a, .collection-add a, .bookmark-add a')
-      comments_actions = $('.comments-load a')
-      remote_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.defaultHandler
-      user_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.actionHandler
-      comments_actions.bind('ajax:' + eventName, callback) for eventName, callback of tinami.commentsHandler
+    remote_actions = $('a[data-remote]')
+    for eventName, callback of tinami.defaultHandler
+      remote_actions.live('ajax:' + eventName, callback)
+    user_actions = $('.support a, .collection-add a, .bookmark-add a')
+    for eventName, callback of tinami.actionHandler
+      user_actions.live('ajax:' + eventName, callback)
+    comments_actions = $('.comments-load a')
+    for eventName, callback of tinami.commentsHandler
+      comments_actions.live('ajax:' + eventName, callback)
 
   mobileinit: () ->
     $m = $.mobile
-    $m.ajaxEnabled = false
-    $m.hashListeningEnabled = false
     $m.loadingMessage = '読み込み中...'
     $m.pageLoadErrorMessage = '読み込みに失敗しました'
 
@@ -34,13 +35,13 @@ class TINAMI
 
   defaultHandler:
     beforeSend: (event) ->
-      $.mobile.pageLoading()
+      $.mobile.showPageLoadingMsg()
     success: (event, data) ->
-      $.mobile.pageLoading(true)
+      $.mobile.hidePageLoadingMsg()
     complete: (event, data) ->
-      $.mobile.pageLoading(true)
+      $.mobile.hidePageLoadingMsg()
     error: (event, data) ->
-      $.mobile.pageLoading(true)
+      $.mobile.hidePageLoadingMsg()
       alert(data.responseText)
 
   actionHandler:

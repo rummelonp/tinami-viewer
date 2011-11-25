@@ -4,7 +4,7 @@
   <%= flash[:notice] %>
 </div>
 <% end %>
-<%= form_tag :auth, method: :post do %>
+<%= form_tag :auth, method: :post, "data-ajax" => false do %>
 <div data-role="fieldcontain">
   <%= label_tag :email, "メールアドレス" %>
   <%= email_field_tag :email, params[:email], id: :email %>

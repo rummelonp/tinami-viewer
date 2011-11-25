@@ -24,7 +24,7 @@
         <% end %>
         <% unless params[:action] == "auth" %>
         <% if authenticated? %>
-        <%= link_to "ログアウト", :logout, class: "ui-btn-right" %>
+        <%= link_to "ログアウト", :logout, class: "ui-btn-right", "data-ajax" => false %>
         <% else %>
         <%= link_to "ログイン", :login, class: "ui-btn-right" %>
         <% end %>

@@ -2898,7 +2898,13 @@ $.widget( "mobile.page", $.mobile.widget, {
 						hideMsg();
 
 						//show error message
-						$( "<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h1>"+ $.mobile.pageLoadErrorMessage +"</h1></div>" )
+            var msg = $.mobile.pageLoadErrorMessage;
+            if (xhr.responseText &&
+                xhr.responseText.length > 0)
+            {
+              msg = xhr.responseText;
+            }
+						$( "<div class='ui-loader ui-overlay-shadow ui-body-e ui-corner-all'><h1>"+ msg +"</h1></div>" )
 							.css({ "display": "block", "opacity": 0.96, "top": $window.scrollTop() + 100 })
 							.appendTo( settings.pageContainer )
 							.delay( 800 )

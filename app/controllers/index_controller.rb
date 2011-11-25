@@ -32,7 +32,11 @@ class IndexController < ApplicationController
       session[:auth_key] = auth.auth_key
       redirect_to :index
     rescue TINAMI::Error => e
-      flash[:notice] = e.message
+      if request.xhr?
+        render text: e.message, status: 400
+      else
+        flash[:notice] = e.message
+      end
     end
   end
 

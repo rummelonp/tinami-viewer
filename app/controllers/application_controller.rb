@@ -20,7 +20,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from TINAMI::Error do |e|
     logger.info e
-    @notice = e.message
-    render template: 'error/index', status: 400
+    if request.xhr?
+      render text: e.message, status: 400
+    else
+      @notice = e.message
+      render template: 'error/index', status: 400
+    end
   end
 end

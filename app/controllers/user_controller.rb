@@ -55,6 +55,13 @@ class UserController < ApplicationController
   end
 
   def add_comment
+    begin
+      client.add_comment(params[:cont_id], params[:comment])
+    rescue TINAMI::Error => e
+      logger.info e
+      flash[:notice] = e.message
+    end
+    redirect_to content_url(params[:cont_id])
   end
 
   def remove_comment

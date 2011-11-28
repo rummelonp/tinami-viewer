@@ -44,13 +44,6 @@
   <div class="valuation">
     支援: <span class="count"><%= c.valuation %></span>
   </div>
-  <div class="comments-container">
-    <div class="comments-load">
-      <%= button 'コメントを読み込む', url_for(controller: :user, action: :comments, cont_id: @cont_id), method: :get, remote: true %>
-    </div>
-    <div class="comments">
-    </div>
-  </div>
   <% if authenticated? && c.issupport.to_i != 1 %>
   <div class="support">
     <%= button '支援する', url_for(controller: :user, action: :support, cont_id: @cont_id), method: :post, remote: true %>
@@ -61,6 +54,24 @@
     <%= button 'コレクションに追加する', url_for(controller: :user, action: :add_collection, cont_id: @cont_id), method: :post, remote: true %>
   </div>
   <% end %>
+  <div class="comments-container">
+    <div class="comments-load">
+      <%= button 'コメントを読み込む', url_for(controller: :user, action: :comments, cont_id: @cont_id), method: :get, remote: true %>
+    </div>
+    <div class="comments">
+    </div>
+    <% if authenticated? %>
+    <div class="comment-add">
+      <%= form_tag :add_comment, method: :post, "data-ajax" => false do %>
+      <div data-role="fieldcontain">
+        <%= label_tag :comment, "コメント" %>
+        <%= text_field_tag :comment %>
+      </div>
+      <%= submit_tag "書きこむ", "data-theme" => "b" %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
   <div id="<%= c.creator.id %>" class="creator">
     <div class="name author">
       <h3><%= link_to_profile c.creator.name, c.creator.id %></h3>

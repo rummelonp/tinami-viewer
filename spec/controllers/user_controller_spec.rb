@@ -117,8 +117,38 @@ describe UserController do
     end
   end
 
-  describe "GET 'add_comment'" do
-    it "should be successful"
+  describe "POST 'add_comment'" do
+    context "add comment successful" do
+      before do
+        TINAMI.should_receive(:client).and_return(@client)
+        @client.should_receive(:add_comment).with('1', 'comment')
+        post :add_comment, cont_id: 1, comment: 'comment'
+      end
+
+      it "should be redirect to content" do
+        response.should be_redirect
+      end
+
+      it 'flash should not have error message' do
+        flash[:notice].should be_blank
+      end
+    end
+
+    context "add comment failue" do
+      before do
+        TINAMI.should_receive(:client).and_return(@client)
+        @client.should_receive(:add_comment).with('1', '').and_raise(TINAMI::FailError.new(nil, nil))
+        post :add_comment, cont_id: 1, comment: ''
+      end
+
+      it "should be redirect to content" do
+        response.should be_redirect
+      end
+
+      it 'flash should not have error message' do
+        flash[:notice].should be_present
+      end
+    end
   end
 
   describe "GET 'remove_comment'" do

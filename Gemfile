@@ -15,7 +15,6 @@ group :development do
   gem 'guard-livereload'
   gem 'guard-rspec'
   gem 'pry-rails'
-  gem 'capistrano'
 end
 
 group :development, :test do

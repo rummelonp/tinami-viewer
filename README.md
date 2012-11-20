@@ -1,7 +1,7 @@
-== TINAMI Viewer (ちなみびゅあ)
+# TINAMI Viewer (ちなみびゅあ)
 
 The TINAMI Viewer Made with Ruby on Rails 3.2.9
 
-== License
+##License
 
 Released under the MIT license: http://www.opensource.org/licenses/MIT

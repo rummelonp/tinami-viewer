@@ -1,4 +1,4 @@
-# TINAMI Viewer (���Ȃ݂т゠)
+# TINAMI Viewer (ちなみびゅあ)
 
 The TINAMI Viewer Made with Ruby on Rails 3.2.11
 

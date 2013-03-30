@@ -51,12 +51,9 @@ class TINAMI
     $('.hfeed .content .thumbnail img').
       each(TINAMI.setImagePosition).
       on('load', TINAMI.setImagePosition))
-  remote_actions = $('a[data-remote]')
   for eventName, callback of TINAMI.defaultHandler
-    remote_actions.on('ajax:' + eventName, callback)
-  user_actions = $('.support a, .collection-add a, .bookmark-add a')
+    $d.on('ajax:' + eventName, 'a[data-remote]', callback)
   for eventName, callback of TINAMI.actionHandler
-    user_actions.on('ajax:' + eventName, callback)
-  comments_actions = $('.comments-load a')
+    $d.on('ajax:' + eventName, '.support a, .collection-add a, .bookmark-add a', callback)
   for eventName, callback of TINAMI.commentsHandler
-    comments_actions.on('ajax:' + eventName, callback)
+    $d.on('ajax:' + eventName, '.comments-load a', callback)

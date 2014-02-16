@@ -9,7 +9,7 @@ describe ApplicationHelper do
       end
 
       it 'should be true' do
-        authenticated?.should be_true
+        expect(authenticated?).to be_true
       end
     end
 
@@ -19,7 +19,7 @@ describe ApplicationHelper do
       end
 
       it 'should be false' do
-        authenticated?.should be_false
+        expect(authenticated?).to be_false
       end
     end
   end

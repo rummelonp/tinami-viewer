@@ -2,151 +2,157 @@ require 'hashie/mash'
 require 'spec_helper'
 
 describe UserController do
-  before do
-    session[:auth_key] = '*** auth key ***'
+  let(:auth_key) { 'auth_key' }
 
-    @client = TINAMI.new
+  let(:client) { TINAMI.new }
 
-    @content = Hashie::Mash.new({
+  let(:content) do
+    Hashie::Mash.new(
       id: '1',
       type: 'illust',
       thumbnails: {
         thumbnail_150x150: {
           url: 'http://example.com/illust.gif'
-        }
-      }
-    })
+        },
+      },
+    )
+  end
 
-    @contents = [@content] * 10
-    @contents_data = Hashie::Mash.new({contents: @contents})
+  let(:contents) { [content] * 10 }
+
+  let(:contents_data) { Hashie::Mash.new(contents: contents) }
+
+  before do
+    session[:auth_key] = auth_key
   end
 
   describe "GET 'bookmark_contents'" do
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:bookmark_contents).and_return(@contents_data)
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:bookmark_contents).and_return(contents_data)
       get :bookmark_contents
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "GET 'watchkeyword_contents'" do
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:watchkeyword_contents).and_return(@contents_data)
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:watchkeyword_contents).and_return(contents_data)
       get :watchkeyword_contents
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "GET 'friend_recommends'" do
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:friend_recommends).and_return(@contents_data)
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:friend_recommends).and_return(contents_data)
       get :friend_recommends
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "GET 'collections'" do
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:collections).and_return(@contents_data)
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:collections).and_return(contents_data)
       get :collections
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "GET 'bookmarks'" do
-    before do
-      @creator = Hashie::Mash.new({
+    let(:creator) do
+      Hashie::Mash.new(
         id: "1",
         name: "creator",
-        thumbnail: "http://example.com/creator.png"
-      })
-      @creators = [@creator] * 10
-      @creators_data = Hashie::Mash.new({creators: @creators})
+        thumbnail: "http://example.com/creator.png",
+      )
     end
 
+    let(:creators) { [creator] * 10 }
+
+    let(:creators_data) { Hashie::Mash.new(creators: creators) }
+
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:bookmarks).and_return(@creators_data)
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:bookmarks).and_return(creators_data)
       get :bookmarks
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "POST 'support'" do
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:support).with('1')
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:support).with('1')
       xhr :post, :support, cont_id: 1
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "POST 'add_collection'" do
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:add_collection).with('1')
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:add_collection).with('1')
       xhr :post, :add_collection, cont_id: 1
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "POST 'add_bookmark'" do
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:add_bookmark).with('1')
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:add_bookmark).with('1')
       xhr :post, :add_bookmark, prof_id: 1
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "POST 'comments'" do
-    before do
-      @comments = ['comment'] * 10
-      @comments_data = Hashie::Mash.new({comments: @comments})
-    end
+    let(:comments) { ['comment'] * 10 }
+
+    let(:comments_data) { Hashie::Mash.new(comments: comments) }
 
     it "should be successful" do
-      TINAMI.should_receive(:new).and_return(@client)
-      @client.should_receive(:comments).with('1').and_return(@comments_data)
+      allow(TINAMI).to receive(:new).and_return(client)
+      expect(client).to receive(:comments).with('1').and_return(comments_data)
       xhr :get, :comments, cont_id: 1
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
   describe "POST 'add_comment'" do
     context "add comment successful" do
       before do
-        TINAMI.should_receive(:new).and_return(@client)
-        @client.should_receive(:add_comment).with('1', 'comment')
+        allow(TINAMI).to receive(:new).and_return(client)
+        expect(client).to receive(:add_comment).with('1', 'comment')
         post :add_comment, cont_id: 1, comment: 'comment'
       end
 
       it "should be redirect to content" do
-        response.should be_redirect
+        expect(response).to be_redirect
       end
 
       it 'flash should not have error message' do
-        flash[:notice].should be_blank
+        expect(flash[:notice]).to be_blank
       end
     end
 
-    context "add comment failue" do
+    context "add comment failure" do
       before do
-        TINAMI.should_receive(:new).and_return(@client)
-        @client.should_receive(:add_comment).with('1', '').and_raise(TINAMI::FailError)
+        allow(TINAMI).to receive(:new).and_return(client)
+        expect(client).to receive(:add_comment).with('1', '').and_raise(TINAMI::FailError)
         post :add_comment, cont_id: 1, comment: ''
       end
 
       it "should be redirect to content" do
-        response.should be_redirect
+        expect(response).to be_redirect
       end
 
-      it 'flash should not have error message' do
-        flash[:notice].should be_present
+      it 'flash should have error message' do
+        expect(flash[:notice]).to be_present
       end
     end
   end

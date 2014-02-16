@@ -1,11 +1,11 @@
-# -*- coding: utf-8 -*-
+require 'hashie/mash'
 require 'spec_helper'
 
 describe UserController do
   before do
     session[:auth_key] = '*** auth key ***'
 
-    @client = TINAMI.client
+    @client = TINAMI.new
 
     @content = Hashie::Mash.new({
       id: '1',
@@ -23,7 +23,7 @@ describe UserController do
 
   describe "GET 'bookmark_contents'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:bookmark_contents).and_return(@contents_data)
       get :bookmark_contents
       response.should be_success
@@ -32,7 +32,7 @@ describe UserController do
 
   describe "GET 'watchkeyword_contents'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:watchkeyword_contents).and_return(@contents_data)
       get :watchkeyword_contents
       response.should be_success
@@ -41,7 +41,7 @@ describe UserController do
 
   describe "GET 'friend_recommends'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:friend_recommends).and_return(@contents_data)
       get :friend_recommends
       response.should be_success
@@ -50,7 +50,7 @@ describe UserController do
 
   describe "GET 'collections'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:collections).and_return(@contents_data)
       get :collections
       response.should be_success
@@ -69,7 +69,7 @@ describe UserController do
     end
 
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:bookmarks).and_return(@creators_data)
       get :bookmarks
       response.should be_success
@@ -78,7 +78,7 @@ describe UserController do
 
   describe "POST 'support'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:support).with('1')
       xhr :post, :support, cont_id: 1
       response.should be_success
@@ -87,7 +87,7 @@ describe UserController do
 
   describe "POST 'add_collection'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:add_collection).with('1')
       xhr :post, :add_collection, cont_id: 1
       response.should be_success
@@ -96,7 +96,7 @@ describe UserController do
 
   describe "POST 'add_bookmark'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:add_bookmark).with('1')
       xhr :post, :add_bookmark, prof_id: 1
       response.should be_success
@@ -110,7 +110,7 @@ describe UserController do
     end
 
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:comments).with('1').and_return(@comments_data)
       xhr :get, :comments, cont_id: 1
       response.should be_success
@@ -120,7 +120,7 @@ describe UserController do
   describe "POST 'add_comment'" do
     context "add comment successful" do
       before do
-        TINAMI.should_receive(:client).and_return(@client)
+        TINAMI.should_receive(:new).and_return(@client)
         @client.should_receive(:add_comment).with('1', 'comment')
         post :add_comment, cont_id: 1, comment: 'comment'
       end
@@ -136,8 +136,8 @@ describe UserController do
 
     context "add comment failue" do
       before do
-        TINAMI.should_receive(:client).and_return(@client)
-        @client.should_receive(:add_comment).with('1', '').and_raise(TINAMI::FailError.new(nil, nil))
+        TINAMI.should_receive(:new).and_return(@client)
+        @client.should_receive(:add_comment).with('1', '').and_raise(TINAMI::FailError)
         post :add_comment, cont_id: 1, comment: ''
       end
 

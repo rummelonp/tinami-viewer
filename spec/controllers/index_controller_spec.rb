@@ -1,8 +1,9 @@
+require 'hashie/mash'
 require 'spec_helper'
 
 describe IndexController do
   before do
-    @client = TINAMI.client
+    @client = TINAMI.new
 
     @content = Hashie::Mash.new({
       id: '1',
@@ -28,7 +29,7 @@ describe IndexController do
 
   describe "GET 'ranking'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:ranking).with('0').and_return(@contents_data)
       get :ranking, category: 0
       response.should be_success
@@ -37,7 +38,7 @@ describe IndexController do
 
   describe "GET 'search'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:get).and_return(@contents_data)
       get :search
       response.should be_success
@@ -46,7 +47,7 @@ describe IndexController do
 
   describe "GET 'content'" do
     it "should be successful" do
-      TINAMI.should_receive(:client).and_return(@client)
+      TINAMI.should_receive(:new).and_return(@client)
       @client.should_receive(:content).with('1').and_return(@content_data)
       get :content, cont_id: 1
       response.should be_success
@@ -81,7 +82,7 @@ describe IndexController do
 
     context 'login failure' do
       before do
-        TINAMI.should_receive(:auth).and_raise(TINAMI::FailError.new(nil, nil))
+        TINAMI.should_receive(:auth).and_raise(TINAMI::FailError)
         post :auth
       end
 

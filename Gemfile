@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 
 gem 'jquery-rails', '~> 2.1'
-gem 'tinami', '~> 0.4'
+gem 'tinami', '1.0.1'
+gem 'ox'
 
 group :assets do
   gem 'sass-rails', '~> 3.2'

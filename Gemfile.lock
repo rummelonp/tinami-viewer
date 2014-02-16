@@ -50,6 +50,10 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
+    faraday (0.8.9)
+      multipart-post (~> 1.2.0)
+    faraday_middleware (0.9.0)
+      faraday (>= 0.7.4, < 0.9)
     ffi (1.9.3)
     formatador (0.2.4)
     growl (1.0.3)
@@ -88,7 +92,10 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     multi_json (1.8.4)
+    multi_xml (0.5.5)
+    multipart-post (1.2.0)
     nio4r (1.0.0)
+    ox (2.1.1)
     polyglot (0.3.3)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -125,8 +132,6 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -160,11 +165,11 @@ GEM
     thor (0.18.1)
     tilt (1.4.1)
     timers (1.1.0)
-    tinami (0.4.3)
-      activesupport
-      hashie
-      i18n
-      rest-client
+    tinami (1.0.1)
+      faraday (~> 0.8.9)
+      faraday_middleware (~> 0.9.0)
+      hashie (~> 2.0.5)
+      multi_xml (~> 0.5.5)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -182,10 +187,11 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   jquery-rails (~> 2.1)
+  ox
   pry-rails
   rails (= 3.2.13)
   rspec-rails
   sass-rails (~> 3.2)
   therubyracer (~> 0.11)
-  tinami (~> 0.4)
+  tinami (= 1.0.1)
   uglifier (~> 1.3)

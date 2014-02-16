@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.0.2'
 
-gem 'jquery-rails', '~> 2.1'
+gem 'jquery-rails'
 gem 'tinami', '1.0.1'
 gem 'ox'
 
 group :assets do
-  gem 'sass-rails', '~> 3.2'
-  gem 'therubyracer', '~> 0.11'
-  gem 'coffee-rails', '~> 3.2'
-  gem 'uglifier', '~> 1.3'
+  gem 'sass-rails'
+  gem 'therubyracer'
+  gem 'coffee-rails'
+  gem 'uglifier'
 end
 
 group :development, :test do

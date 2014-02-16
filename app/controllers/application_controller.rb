@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
   def client
     return @client if @client
     if authenticated?
-      @client = TINAMI.client(auth_key: session[:auth_key])
+      @client = TINAMI.new(auth_key: session[:auth_key])
     else
-      @client = TINAMI.client
+      @client = TINAMI.new
     end
 
     @client

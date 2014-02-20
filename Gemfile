@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.3'
 
 gem 'jquery-rails'
 gem 'tinami', '1.0.1'

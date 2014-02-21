@@ -1,6 +1,6 @@
 # TINAMI Viewer (ちなみびゅあ)
 
-The TINAMI Viewer Made with Ruby on Rails 3.2.11
+The TINAMI Viewer Made with Ruby on Rails
 
 ## Copyright
 Copyright (c) 2012 [Kazuya Takeshima](mailto:mail@mitukiii.jp). See [LICENSE][] for details.
